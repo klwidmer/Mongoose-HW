@@ -1,0 +1,26 @@
+{
+  "name": "mongoose-hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klwidmer/Mongoose-HW.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/klwidmer/Mongoose-HW/issues"
+  },
+  "homepage": "https://github.com/klwidmer/Mongoose-HW#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.1.5"
+  }
+}
