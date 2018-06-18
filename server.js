@@ -1,8 +1,10 @@
-
+var logger = require("morgan");
 var express = require("express");
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
+var axios = require("axios");
+var cheerio = require("cheerio");
 
 // Set up our port to be either the host's designated port, or 3000
 var PORT = process.env.PORT || 8080;
@@ -36,21 +38,19 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Mongo-HW";
 
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, {
-    useMongoClient: true
-});
+mongoose.connect(MONGODB_URI) 
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with request
-    axios.get("http://www.echojs.com/").then(function(response) {
+    axios.get("http://www.startribune.com/").then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
   
       // Now, we grab every h2 within an article tag, and do the following:
-      $("article h2").each(function(i, element) {
+      $("article").each(function(i, element) {
         // Save an empty result object
         var result = {};
   
@@ -78,7 +78,7 @@ app.get("/scrape", function(req, res) {
   });
 });
 // Route for getting all Articles from the db
-app.get("/articles", function(req, res) {
+app.get("/Articles", function(req, res) {
     // Grab every document in the Articles collection
     db.Article.find({})
       .then(function(dbArticle) {
