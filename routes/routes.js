@@ -64,7 +64,7 @@ router.get("/scrape", function(req, res) {
     });
 
     // If we were able to successfully scrape and save an Article, send a message to the client
-    res.redirect("/Articles");
+    res.redirect("/");
   });
 });
 
