@@ -3,11 +3,26 @@ var router = express.Router();
 var axios = require('axios');
 var cheerio = require('cheerio');
 
-router.get('/', function(req,res){
-    res.render('index');
-})
+
 
 var db = require('../models')
+
+// Route for getting all Articles from the db
+router.get("/", function(req, res) {
+  // Grab every document in the Articles collection
+  db.Article.find({})
+    .then(function(dbArticle) {
+      // If we were able to successfully find Articles, send them back to the client
+      console.log(require('util').inspect(dbArticle))
+      res.render("index", {articles: dbArticle});
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+
 // A GET route for scraping the echoJS website
 router.get("/scrape", function(req, res) {
     // First, we grab the body of the html with request
@@ -52,21 +67,6 @@ router.get("/scrape", function(req, res) {
     res.redirect("/Articles");
   });
 });
-
-// Route for getting all Articles from the db
-router.get("/Articles", function(req, res) {
-    // Grab every document in the Articles collection
-    db.Article.find({})
-      .then(function(dbArticle) {
-        // If we were able to successfully find Articles, send them back to the client
-        console.log(require('util').inspect(dbArticle))
-        res.render("index", {articles: dbArticle});
-      })
-      .catch(function(err) {
-        // If an error occurred, send it to the client
-        res.json(err);
-      });
-  });
 
 
 module.exports = router;
